@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - image: acrinnorth2.azurecr.cn/ai-dataops/zeno:0.9.1
+    name: mypod
+    volumeMounts:
+      - name: azure
+        mountPath: /mnt
+    workingDir: /mnt/project
+    command: ["/bin/sh","-c","zeno extract headless --ops_config_path /mnt/project/config_ops_user_modify.yml -c FC1 -l true -o /mnt/project -u /mnt/project/zeno_test.seq"]
+  volumes:
+  - name: azure
+    persistentVolumeClaim:
+      claimName: azurefile
+      readOnly: False
