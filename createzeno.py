@@ -9,7 +9,6 @@ JOB_NAME = "zeno"
 # 已经创建pod的node列表
 status_table = ["aks-agentpool-22697514-vmss000000"]
 
-
 def get_aks_config() -> dict:
     credential = ClientSecretCredential(tenant_id='1a6857ff-9169-4a8a-83bf-5de6129d38f6',
                                         client_id='2adc7898-6cb4-4b5e-8231-6d6d5bbdd149',
@@ -35,7 +34,7 @@ def create_job_object(node_name):
     volumeMount = client.V1VolumeMount(mount_path='/mnt/input', name='azure', read_only=False,
                                        sub_path='Extraction/source2')
     volumeMount2 = client.V1VolumeMount(mount_path='/mnt/project', name='azure', read_only=False,
-                                        sub_path='Extraction/extract_result/only9_29_2')
+                                        sub_path='Extraction/extract_result/aazz')
     volume = client.V1Volume(name='azure', azure_file=azure_file)
     # 创建容器
     container = client.V1Container(
@@ -43,7 +42,7 @@ def create_job_object(node_name):
         image="acrinnorth2.azurecr.cn/ai-dataops/zeno:0.9.1",
         volume_mounts=[volumeMount, volumeMount2],
         command=["/bin/sh", "-c",
-                 "zeno extract headless --ops_config_path /mnt/project/config_ops_user_modify.yml -c FC1 -l true -o /mnt/project -u /mnt/project/zeno_test.seq"],
+                 "zeno extract headless --ops_config_path /mnt/project/config_ops_user_modify.yml -c FC1 -l true -o /mnt/project"],
         working_dir='/mnt/project',
         image_pull_policy='IfNotPresent',
     )
@@ -145,6 +144,6 @@ def delete_pod(pod_name: str, name_space: str):
 if __name__ == '__main__':
     # 从key_vault中加载aks配置文件
     config.load_kube_config_from_dict(get_aks_config())
-    # scale_node(1)
-    # pod_name = get_node_to_create_pod()
+    scale_node(1)
+    pod_name = get_node_to_create_pod()
     create_job('aks-agentpool-22697514-vmss000000')
