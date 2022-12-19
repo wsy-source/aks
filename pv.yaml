@@ -1,23 +1,23 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: azurefile
+  name: labelfilesharetest
 spec:
   capacity:
-    storage: 100Gi
+    storage: 5Ti
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: azurefile-csi-premium
+  storageClassName: azurefile-csi
   csi:
     driver: file.csi.azure.com
     readOnly: false
-    volumeHandle: unique-volumeid  # ceshi
+    volumeHandle: unique-volumeid  # make sure this volumeid is unique in the cluster
     volumeAttributes:
-      resourceGroup: rg-sean-extraction-test
-      shareName: fileshare-01
+      resourceGroup: rg-viper-portal-dms-uat  # optional, only set this when storage account is not in the same resource group as agent node
+      shareName: originshare
     nodeStageSecretRef:
-      name: azure-secret
+      name: originfileshare1test
       namespace: default
   mountOptions:
     - dir_mode=0777
@@ -27,4 +27,3 @@ spec:
     - mfsymlinks
     - cache=strict
     - nosharesock
-    - nobrl
