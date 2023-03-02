@@ -4,7 +4,7 @@ from azure.keyvault.secrets import SecretClient
 from azure.mgmt.containerservice import ContainerServiceClient
 from azure.identity import AzureAuthorityHosts
 
-JOB_NAME = "zeno"
+JOB_NAME = "zeno"op
 
 # 已经创建pod的node列表
 status_table = ["aks-agentpool-22697514-vmss000000"]
