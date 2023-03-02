@@ -4,11 +4,12 @@ from azure.keyvault.secrets import SecretClient
 from azure.mgmt.containerservice import ContainerServiceClient
 from azure.identity import AzureAuthorityHosts
 
-JOB_NAME = "zeno"op
+JOB_NAME = "zeno"
 
 # 已经创建pod的node列表
 status_table = ["aks-agentpool-22697514-vmss000000"]
 
+raise Exception('hello')
 def get_aks_config() -> dict:
     credential = ClientSecretCredential(tenant_id='1a6857ff-9169-4a8a-83bf-5de6129d38f6',
                                         client_id='2adc7898-6cb4-4b5e-8231-6d6d5bbdd149',
